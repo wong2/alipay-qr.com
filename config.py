@@ -27,3 +27,16 @@ Q_ACCESS_TOKEN = 'eYy9jQlxRSftSS9Cp52gJvZ7BoIQWsfVa0lNqGzS'
 Q_SECRET_TOKEN = '0_bJt39r7Fb19AJDt6kl0defsW72wFfVV8X_42yf'
 Q_BUCKET = 'alipay-qr'
 Q_DOMAIN = '{bucket}.qiniudn.com'.format(bucket=Q_BUCKET)
+
+
+WEIBO = dict(
+    consumer_key='1575471143',
+    consumer_secret='65bd9347098234c912b47922070971c6',
+    request_token_params={'scope': 'email'},
+    base_url='https://api.weibo.com/2/',
+    authorize_url='https://api.weibo.com/oauth2/authorize',
+    request_token_url=None,
+    access_token_method='POST',
+    access_token_url='https://api.weibo.com/oauth2/access_token',
+    content_type='application/json',
+)

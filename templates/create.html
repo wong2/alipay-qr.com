@@ -1,1 +1,46 @@
 {% extends 'base.html' %}
+
+{% block more_header %}
+<style type="text/css">
+  .form.profile {
+    width: 800px;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="ui one column center aligned page grid">
+  <div class="column twelve wide">
+    <div class="ui form segment left aligned profile">
+      <div class="ui message">
+        <div class="content">
+          <img src="{{ avatar_large }}" />
+          <a href="http://weibo.com/{{ profile_url }}">{{ name }}</a>
+        </div>
+      </div>
+      <div class="field inline">
+        <label>个人主页：</label>
+        <div class="ui label">http://alipay-qr.com/</div>
+        <input type="text" />
+      </div>
+      <div class="field inline">
+        <label>上传二维码：</label>
+        <div class="ui tiny hover icon button">
+          选择图片<i class="qr code icon"></i>
+        </div>
+      </div>
+      <div class="field inline">
+        <label>实名：</label>
+        <div class="ui small input">
+          <input type="text" placeholder="选填">
+        </div>
+      </div>
+      <div class="field">
+        <label>备注：</label>
+        <textarea></textarea>
+      </div>
+      <div class="ui blue submit button">提交</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
