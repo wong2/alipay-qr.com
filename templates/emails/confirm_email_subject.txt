@@ -1,3 +1,0 @@
-{% extends 'emails/base_subject.txt' %}
-
-{% block subject %}邮箱验证{% endblock %}

@@ -1,7 +1,6 @@
 #-*-coding:utf-8-*-
 
 from flask import redirect, render_template, url_for
-from flask.ext.user import current_user, login_required
 
 
 def index():
