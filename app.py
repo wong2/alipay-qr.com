@@ -1,9 +1,11 @@
 #-*-coding:utf-8-*-
 
-from flask import (Flask, redirect, render_template, url_for,
-        request, session)
+import os
+import model
+from functools import wraps
+from hashlib import sha1
+from flask import (Flask, redirect, render_template, url_for, request, session, abort, g, send_from_directory, jsonify)
 from flask_oauthlib.client import OAuth
-
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -13,34 +15,84 @@ weibo = oauth.remote_app('weibo', app_key='WEIBO')
 oauth.init_app(app)
 
 
+@app.before_request
+def before_request():
+    uid = session.get('uid')
+    g.username = model.get_username(uid)
+    g.uid = uid
+
+
+def require_login(f):
+    @wraps(f)
+    def _(*args, **kwargs):
+        if 'oauth_token' not in session:
+            return redirect(url_for('index'))
+        else:
+            return f(*args, **kwargs)
+    return _
+
+def is_allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1] in ['jpg', 'jpeg','png']
+
+
 @app.route('/')
 def index():
-    if 'uid' in session:
-        access_token = session['oauth_token'][0]
-        uid = session['uid']
-        created = False
-        if not created:
+    if 'oauth_token' in session:
+        if not g.username:
+            uid = session['uid']
             user = weibo.get('users/show.json', data={'uid': uid})
             return render_template('create.html', **user.data)
         else:
-            return redirect(url_for('profile', username='wong2'))
+            return redirect(url_for('profile', username=g.username))
     else:
         return render_template('login.html')
 
 
+@app.route('/create', methods=['POST'])
+@require_login
+def create_profile():
+    uid = session['uid']
+    username = request.form.get('username')
+    realname = request.form.get('realname', '')
+    intro = request.form.get('intro', '')
+
+    file = request.files['qr_image']
+    if file and is_allowed_file(file.filename):
+        filename = '%s.jpg' % sha1(username).hexdigest()
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    profile = {
+        'uid': uid,
+        'username': username,
+        'realname': realname,
+        'intro': intro,
+        'qr_image': filename,
+    }
+    model.create_profile(uid, username, profile)
+    return redirect(url_for('profile', username=username))
+
+
+@app.route('/check', methods=['GET', 'POST'])
+def check_username():
+    username = request.values['username']
+    return jsonify({
+        'valid': not model.username_exists(username)
+    })
+
+
 @app.route('/<username>')
 def profile(username):
-    return render_template('profile.html')
-
-
-@app.route('/<username>/edit')
-def edit_profile(username):
-    return render_template('edit.html')
+    profile = model.get_profile(username)
+    if not profile:
+        abort(404)
+    return render_template('profile.html', **profile)
 
 
 @app.route('/qr/<username>')
 def qr_image(username):
-    pass
+    image_name = model.get_qr_image(username)
+    return send_from_directory(app.config['UPLOAD_FOLDER'], image_name)
 
 
 @app.route('/about')

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{realname or username}}的支付宝收款主页
+{% endblock %}
+
+{% block more_header %}
+  <style type="text/css">
+    .main-container {
+      max-width: 700px;
+    }
+    .qr-code, .weibo {
+      float: left;
+    }
+    .qr-code {
+      width: 310px;
+    }
+    .qr-code img {
+      max-width: 300px;
+      max-height: 300px;
+    }
+    .qr-code p {
+      font-size: 15px;
+      line-height: 1.2;
+      text-align: center;
+      color: #999;
+      margin-top: 20px;
+    }
+    .weibo {
+      border-left: 1px dashed #333;
+      padding-left: 20px;
+      margin-left: 20px;
+    }
+    footer {
+      clear: both;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+<h3>{{realname or username}}的支付宝收款主页</h3>
+<blockquote>{{intro}}</blockquote>
+
+<hr />
+
+<div class="main-container center-block">
+  <div class="qr-code well">
+    <h5>TA的支付宝二维码</h5>
+    <img src="/qr/{{username}}" />
+    <p>用手机钱包扫码支付哦～</p>
+  </div>
+
+  <div class="weibo">
+    <h5>关联的微博账号</h5>
+    <iframe width="320" height="100" class="share_self" frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=320&height=100&fansRow=2&ptype=1&speed=0&skin=1&isTitle=0&noborder=1&isWeibo=0&isFans=0&uid={{uid}}&verifier=99541cab&dpc=1"></iframe>
+  </div>
+</div>
+
+{% endblock %}
