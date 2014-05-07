@@ -54,3 +54,5 @@ docs/_build/
 
 qr_images/
 !qr_images/empty.txt
+
+node_modules/

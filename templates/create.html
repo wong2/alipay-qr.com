@@ -87,8 +87,8 @@
 {% endblock %}
 
 {% block more_footer %}
-<script type="text/javascript" src="/static/js/bootstrap.file-input.js"></script>
-<script type="text/javascript" src="/static/js/bootstrapValidator.min.js"></script>
+<script type="text/javascript" src="{{config.STATIC_PREFIX}}/js/bootstrap.file-input.js"></script>
+<script type="text/javascript" src="{{config.STATIC_PREFIX}}/js/validator.min.js"></script>
 <script type="text/javascript">
   $('.file-input').bootstrapFileInput();
   $('#profile-form').bootstrapValidator({
@@ -127,6 +127,10 @@
           },
           notEmpty: { 
             message: '请选择文件'
+          },
+          qrcode: {
+            regex: /https:\/\/qr.alipay.com/,
+            message: '好像不是支付宝二维码图片哦'
           }
         }
       }

@@ -2,6 +2,8 @@
 
 SECRET_KEY = 'THIS IS AN INSECURE SECRET'
 UPLOAD_FOLDER = 'qr_images'
+#STATIC_PREFIX = 'http://alipay-qr.qiniudn.com'
+STATIC_PREFIX = '/static'
 
 WEIBO = dict(
     consumer_key='1575471143',
