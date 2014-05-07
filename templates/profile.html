@@ -47,7 +47,6 @@
 {% block content %}
 
 <h3>{{realname or username}}的支付宝收款主页</h3>
-<blockquote>{{intro}}</blockquote>
 
 <hr />
 
@@ -57,10 +56,12 @@
     <img src="/qr/{{username}}" />
     <p>用手机钱包扫码支付哦～</p>
   </div>
-
-  <div class="weibo">
-    <h5>关联的微博账号</h5>
-    <iframe width="320" height="100" class="share_self" frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=320&height=100&fansRow=2&ptype=1&speed=0&skin=1&isTitle=0&noborder=1&isWeibo=0&isFans=0&uid={{uid}}&verifier=99541cab&dpc=1"></iframe>
+  <div class="right-collumn">
+    <blockquote>{{intro}}</blockquote>
+    <div class="weibo">
+      <h5>关联的微博账号</h5>
+      <iframe width="320" height="100" class="share_self" frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=320&height=100&fansRow=2&ptype=1&speed=0&skin=1&isTitle=0&noborder=1&isWeibo=0&isFans=0&uid={{uid}}&verifier=99541cab&dpc=1"></iframe>
+    </div>
   </div>
 </div>
 
