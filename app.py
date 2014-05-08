@@ -86,9 +86,18 @@ def check_username():
 @app.route('/<username>')
 def profile(username):
     profile = model.get_profile(username)
+    is_owner = g.username == username
     if not profile:
         abort(404)
-    return render_template('profile.html', **profile)
+    return render_template('profile.html', is_owner=is_owner, **profile)
+
+
+@app.route('/edit', methods=['POST'])
+@require_login
+def edit():
+    new_intro = request.form['intro']
+    model.update_profile(g.username, new_intro)
+    return 'ok'
 
 
 @app.route('/qr/<username>')

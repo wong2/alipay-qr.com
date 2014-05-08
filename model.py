@@ -25,3 +25,8 @@ def get_username(uid):
 
 def username_exists(username):
     return db.exists('users:profile:%s' % username)
+
+
+def update_profile(username, intro=None):
+    if intro is not None:
+        db.hset('users:profile:%s' % username, 'intro', intro)

@@ -31,12 +31,19 @@
       padding-left: 20px;
       margin-left: 20px;
     }
+    .edit-icon {
+      font-size: 13px;
+      cursor: pointer;
+    }
     @media screen and (max-width: 768px) {
       .sidebar {
         margin-left: 0;
         padding-left: 0;
         border: none;
       }
+    }
+    #edit-intro-form {
+      display: none;
     }
   </style>
 {% endblock %}
@@ -54,7 +61,19 @@
     <p>用手机钱包扫码支付哦～</p>
   </div>
   <div class="sidebar">
-    <blockquote>{{intro}}</blockquote>
+    <div class="intro">
+      <blockquote>
+        <span id="intro-text">{{intro}}</span>
+        {% if is_owner %}
+          <span class="edit-icon fui-new"></span>
+          <form action="/edit" method="post" id="edit-intro-form">
+            <textarea name="intro" class="form-control" rows="3"></textarea>
+            <button type="submit" class="btn btn-primary btn-xs">提交</button>
+            <button type="button" class="btn btn-default btn-xs edit-cancel">取消</button>
+          </form>
+        {% endif %}
+      </blockquote>
+    </div>
     <div class="weibo">
       <h5>关联的微博账号</h5>
       <iframe width="320" height="100" class="share_self" frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=320&height=100&fansRow=2&ptype=1&speed=0&skin=1&isTitle=0&noborder=1&isWeibo=0&isFans=0&uid={{uid}}&verifier=99541cab&dpc=1"></iframe>
@@ -62,4 +81,33 @@
   </div>
 </div>
 
+{% endblock %}
+
+{% block more_footer %}
+<script type="text/javascript">
+  $('.edit-icon').click(function() {
+    $(this).hide();
+    $('#intro-text').hide();
+    $('#edit-intro-form').show();
+    $('#edit-intro-form textarea').val($('#intro-text').text());
+  });
+  function reset() {
+    $('.edit-icon').show();
+    $('#intro-text').show();
+    $('#edit-intro-form').hide();
+  }
+  $('.edit-cancel').click(reset);
+  $('#edit-intro-form').submit(function(event) {
+    var fm = $(this);
+    $.post(fm.attr('action'), fm.serialize())
+     .done(function(data) {
+       $('#intro-text').text($('#edit-intro-form textarea').val());
+       reset();
+     })
+     .fail(function() {
+       alert('哎呀不好出错了，请稍后重试');
+     });
+    event.preventDefault();
+  });
+</script>
 {% endblock %}
