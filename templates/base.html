@@ -10,8 +10,13 @@
   <link rel="stylesheet" href="http://cdn.staticfile.org/twitter-bootstrap/3.1.1/css/bootstrap.min.css" />
   <link rel="stylesheet" href="{{config.STATIC_PREFIX}}/css/flat-ui.css" />
   <style type="text/css">
+    html {
+      position: relative;
+      min-height: 100%;
+    }
     body {
       //background-image: url('{{config.STATIC_PREFIX}}/images/ps_neutral.png');
+      margin: 0 0 20px;
     }
     .container {
       max-width: 1000px;
@@ -29,6 +34,7 @@
       background: none;
       position: absolute;
       bottom: 10px;
+      height: 20px;
     }
   </style>
   {% block more_header %}{% endblock %} 
