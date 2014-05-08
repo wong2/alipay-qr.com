@@ -99,9 +99,11 @@ def profile(username):
     return render_template('profile.html', is_owner=is_owner, **profile)
 
 
-@app.route('/edit', methods=['POST'])
+@app.route('/<username>/edit', methods=['POST'])
 @require_login
-def edit():
+def edit(username):
+    if g.username != username:
+        abort(403)
     new_intro = request.form['intro']
     model.update_profile(g.username, intro=new_intro)
     return 'ok'

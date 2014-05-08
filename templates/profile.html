@@ -95,7 +95,7 @@
       <blockquote>
         <span id="intro-text">{{intro}}</span>
         {% if is_owner %}
-          <form action="/edit" method="post" id="edit-intro-form">
+          <form action="/{{username}}/edit" method="post" id="edit-intro-form">
             <textarea name="intro" class="form-control" rows="3"></textarea>
             <button type="submit" class="btn btn-primary btn-xs">提交</button>
             <button type="button" class="btn btn-default btn-xs edit-cancel">取消</button>
