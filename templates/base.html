@@ -13,11 +13,13 @@
     .container {
       max-width: 1000px;
     }
-    footer {
-      background: none;
-      padding-top: 50px;
+    nav {
+      font-size: 15px;
+      padding-top: 10px;
     }
-    footer a {
+    nav a {
+      color: #9AA4AF;
+      font-weight: 700;
       margin-right: 10px;
     }
   </style>
@@ -25,8 +27,7 @@
 </head>
 <body>
   <div class="container">
-    {% block content %}{% endblock %} 
-    <footer>
+    <nav class="pull-right">
       <a href="{{url_for('index')}}">首页</a>
       <a href="{{url_for('about')}}">关于</a>
       {% if g.uid %}
@@ -34,7 +35,8 @@
       {% else %}
         <a href="{{url_for('index')}}">登入</a>
       {% endif %}
-    </footer>
+    </nav>
+    {% block content %}{% endblock %} 
   </div>
   <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"></script>
   {% block more_footer %}{% endblock %} 
