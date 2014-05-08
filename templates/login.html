@@ -1,3 +1,24 @@
+{% extends 'base.html' %}
+
+{% block more_header %}
+<style type="text/css">
+  .login-container {
+    margin-left: 50px;
+  }
+</style>
+{% endblock %}
+
 {% block content %}
-<a href="{{ url_for('login') }}">Login with Sina Weibo</a>
+<div class="page-header">
+  <h1>支付宝收款主页 <small>非官方</small></h1>
+</div>
+<div class="intro-container pull-left">
+  <img src="http://placehold.it/500x300" />
+</div>
+<div class="login-container pull-left">
+  <h4>开始创建：</h4>
+  <a href="{{ url_for('login') }}">
+    <img src="http://img.t.sinajs.cn/t4/appstyle/open/images/website/loginbtn/loginbtn_01.png" />
+  </a>
+</div>
 {% endblock %}
