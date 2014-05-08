@@ -30,10 +30,15 @@
       //border-left: 1px dashed #333;
       padding-left: 20px;
       margin-left: 20px;
+      width: 320px;
+      max-width: 320px;
     }
-    .edit-icon {
-      font-size: 13px;
+    .edit-intro {
+      font-size: 16px;
       cursor: pointer;
+    }
+    .edit-intro .edit-icon {
+      font-size: 13px;
     }
     @media screen and (max-width: 768px) {
       .sidebar {
@@ -79,11 +84,15 @@
   </div>
   <div class="sidebar">
     <div class="intro">
-      <h5>备注</h5>
+      <h5>备注
+        <span class="edit-intro">
+          (<span class="edit-icon fui-new"></span>
+          <span class="text">编辑</span>)
+        </span>
+      </h5>
       <blockquote>
         <span id="intro-text">{{intro}}</span>
         {% if is_owner %}
-          <span class="edit-icon fui-new"></span>
           <form action="/edit" method="post" id="edit-intro-form">
             <textarea name="intro" class="form-control" rows="3"></textarea>
             <button type="submit" class="btn btn-primary btn-xs">提交</button>
@@ -117,14 +126,14 @@
 
 {% block more_footer %}
 <script type="text/javascript">
-  $('.edit-icon').click(function() {
+  $('.edit-intro').click(function() {
     $(this).hide();
     $('#intro-text').hide();
     $('#edit-intro-form').show();
     $('#edit-intro-form textarea').val($('#intro-text').text());
   });
   function reset() {
-    $('.edit-icon').show();
+    $('.edit-intro').show();
     $('#intro-text').show();
     $('#edit-intro-form').hide();
   }
