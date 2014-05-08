@@ -1,8 +1,9 @@
 #-*-coding:utf-8-*-
 
 from redis import StrictRedis
+from config import REDIS_URL
 
-db = StrictRedis(decode_responses=True)
+db = StrictRedis.from_url(REDIS_URL, decode_responses=True)
 
 
 def create_profile(uid, username, profile):

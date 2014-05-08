@@ -5,6 +5,8 @@ UPLOAD_FOLDER = 'qr_images'
 #STATIC_PREFIX = 'http://alipay-qr.qiniudn.com'
 STATIC_PREFIX = '/static'
 
+REDIS_URL = 'redis://localhost:6379/5'
+
 WEIBO = dict(
     consumer_key='1575471143',
     consumer_secret='65bd9347098234c912b47922070971c6',
