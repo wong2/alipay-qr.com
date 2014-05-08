@@ -9,7 +9,7 @@
     .main-container {
       max-width: 700px;
     }
-    .qr-code, .weibo {
+    .qr-code, .sidebar {
       float: left;
     }
     .qr-code {
@@ -26,13 +26,13 @@
       color: #999;
       margin-top: 20px;
     }
-    .weibo {
-      border-left: 1px dashed #333;
+    .sidebar {
+      //border-left: 1px dashed #333;
       padding-left: 20px;
       margin-left: 20px;
     }
     @media screen and (max-width: 768px) {
-      .weibo {
+      .sidebar {
         margin-left: 0;
         padding-left: 0;
         border: none;
@@ -53,7 +53,7 @@
     <img src="/qr/{{username}}" />
     <p>用手机钱包扫码支付哦～</p>
   </div>
-  <div class="right-collumn">
+  <div class="sidebar">
     <blockquote>{{intro}}</blockquote>
     <div class="weibo">
       <h5>关联的微博账号</h5>

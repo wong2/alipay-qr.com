@@ -62,8 +62,10 @@ def create_profile():
         filename = '%s.jpg' % sha1(username).hexdigest()
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
+    access_token, _ = session['oauth_token']
     profile = {
         'uid': uid,
+        'access_token': access_token,
         'username': username,
         'realname': realname,
         'intro': intro,
