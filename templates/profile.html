@@ -85,10 +85,12 @@
   <div class="sidebar">
     <div class="intro">
       <h5>备注
+        {% if is_owner %}
         <span class="edit-intro">
           (<span class="edit-icon fui-new"></span>
           <span class="text">编辑</span>)
         </span>
+        {% endif %}
       </h5>
       <blockquote>
         <span id="intro-text">{{intro}}</span>
