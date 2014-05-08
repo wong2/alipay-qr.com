@@ -62,6 +62,9 @@ def create_profile():
         filename = '%s.jpg' % sha1(username).hexdigest()
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
+    user = weibo.get('users/show.json', data={'uid': uid})
+    user_data = user.data
+
     access_token, _ = session['oauth_token']
     profile = {
         'uid': uid,
@@ -70,6 +73,10 @@ def create_profile():
         'realname': realname,
         'intro': intro,
         'qr_image': filename,
+        'weibo_name': user_data['name'],
+        'weibo_id': user_data['profile_url'],
+        'weibo_location': user_data['location'],
+        'weibo_avatar': user_data['profile_image_url'],
     }
     model.create_profile(uid, username, profile)
     return redirect(url_for('profile', username=username))
@@ -96,7 +103,7 @@ def profile(username):
 @require_login
 def edit():
     new_intro = request.form['intro']
-    model.update_profile(g.username, new_intro)
+    model.update_profile(g.username, intro=new_intro)
     return 'ok'
 
 

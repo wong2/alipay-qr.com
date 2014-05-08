@@ -45,6 +45,23 @@
     #edit-intro-form {
       display: none;
     }
+    .weibo-card {
+      width: 320px;
+      max-width: 320px;
+      border: 1px solid #D2D2D2;
+      border-top-width: 2px;
+      font-size: 14px;
+      padding: 15px;
+      padding-bottom: 20px;
+    }
+    .weibo-card .avatar {
+      float: left;
+      margin-right: 10px;
+    }
+    .weibo-card .location {
+      font-size: 13px;
+      color: #999;
+    }
   </style>
 {% endblock %}
 
@@ -62,6 +79,7 @@
   </div>
   <div class="sidebar">
     <div class="intro">
+      <h5>备注</h5>
       <blockquote>
         <span id="intro-text">{{intro}}</span>
         {% if is_owner %}
@@ -76,7 +94,21 @@
     </div>
     <div class="weibo">
       <h5>关联的微博账号</h5>
-      <iframe width="320" height="100" class="share_self" frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=320&height=100&fansRow=2&ptype=1&speed=0&skin=1&isTitle=0&noborder=1&isWeibo=0&isFans=0&uid={{uid}}&verifier=99541cab&dpc=1"></iframe>
+      <div class="weibo-card">
+        <div class="avatar">
+          <a href="http://weibo.com/{{weibo_id}}" target="_blank">
+            <img src="{{weibo_avatar}}" />
+          </a>
+        </div>
+        <div class="detail">
+          <div class="name">
+            <a href="http://weibo.com/{{weibo_id}}" target="_blank">{{weibo_name}}</a>
+          </div>
+          <div class="location">
+            <span>{{weibo_location}}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
