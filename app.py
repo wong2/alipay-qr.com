@@ -99,7 +99,7 @@ def create_profile():
         error = validate(username, realname, intro, file)
         if not error:
             filename = '%s.jpg' % sha1(username).hexdigest()
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            file.save(os.path.join('static', app.config['UPLOAD_FOLDER'], filename))
 
             user = weibo.get('users/show.json', data={'uid': uid})
             user_data = user.data
@@ -163,7 +163,8 @@ def edit(username):
 @app.route('/qr/<username>')
 def qr_image(username):
     image_name = model.get_qr_image(username)
-    return send_from_directory(app.config['UPLOAD_FOLDER'], image_name)
+    return redirect('%s/%s/%s' % (app.config['STATIC_PREFIX'],
+        app.config['UPLOAD_FOLDER'], image_name))
 
 
 @app.route('/about')

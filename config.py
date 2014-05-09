@@ -1,7 +1,7 @@
 #-*-coding:utf-8-*-
 
 SECRET_KEY = 'THIS IS AN INSECURE SECRET'
-UPLOAD_FOLDER = 'qr_images'
+UPLOAD_FOLDER = 'qr_images' # inside ./static/
 STATIC_PREFIX = '/static'
 
 REDIS_URL = 'redis://localhost:6379/5'
