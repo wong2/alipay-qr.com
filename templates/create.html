@@ -117,6 +117,14 @@
     	  }
         }
       },
+      intro: {
+        validators: {
+          stringLength: {
+            max: 300,
+            message: '不能超过300个字符哦'
+          }
+        }
+      },
       qr_image: {
         validators: {
           file: {
