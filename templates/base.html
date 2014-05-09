@@ -15,7 +15,6 @@
       min-height: 100%;
     }
     body {
-      //background-image: url('{{config.STATIC_PREFIX}}/images/ps_neutral.png');
       margin: 0 0 30px;
     }
     .container {
@@ -36,6 +35,11 @@
       bottom: 10px;
       height: 20px;
     }
+    @media screen and (max-width: 768px) {
+      footer {
+        display: none;
+      }
+    }
   </style>
   {% block more_header %}{% endblock %} 
 </head>
@@ -51,7 +55,7 @@
       {% endif %}
     </nav>
     <div class="main">{% block content %}{% endblock %}</div>
-    <footer><a href="http://wong2.me">♥ Created by wong2</a> • <a href="/wong2">请我喝啤酒</a></footer>
+    <footer><a href="http://wong2.me">♥ Created by wong2</a> • <a href="/wong2" class="beer">请我喝啤酒</a></footer>
   </div>
   <script type="text/javascript" src="http://cdn.staticfile.org/jquery/2.1.1-rc2/jquery.min.js"></script>
   {% block more_footer %}{% endblock %} 

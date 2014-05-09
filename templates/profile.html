@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
 {% block title %}
-{{realname or username}}的支付宝收款主页
+  {{realname or username}}的收款主页
 {% endblock %}
 
 {% block more_header %}
   <style type="text/css">
     .main-container {
       max-width: 700px;
+    }
+    .page-title {
+      padding-top: 10px;
     }
     .qr-code, .sidebar {
       float: left;
@@ -27,7 +30,6 @@
       margin-top: 20px;
     }
     .sidebar {
-      //border-left: 1px dashed #333;
       padding-left: 20px;
       margin-left: 20px;
       width: 320px;
@@ -72,7 +74,7 @@
 
 {% block content %}
 
-<h3>{{realname or username}}的支付宝收款主页</h3>
+<h3 class="page-title">{{realname or username}}的收款主页</h3>
 
 <hr />
 
