@@ -4,7 +4,9 @@ import os
 import model
 from functools import wraps
 from hashlib import sha1
-from flask import (Flask, redirect, render_template, url_for, request, session, abort, g, send_from_directory, jsonify)
+from flask import (Flask, redirect, render_template, url_for,
+        request, session, abort, g, send_from_directory,
+        jsonify, flash)
 from flask_oauthlib.client import OAuth
 
 app = Flask(__name__)
@@ -79,6 +81,7 @@ def create_profile():
         'weibo_avatar': user_data['profile_image_url'],
     }
     model.create_profile(uid, username, profile)
+    flash(u'创建成功，把这个网页分享给好友就可以了~')
     return redirect(url_for('profile', username=username))
 
 
