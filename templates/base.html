@@ -47,7 +47,7 @@
       {% if g.uid %}
         <a href="{{url_for('logout')}}">登出</a>
       {% else %}
-        <a href="{{url_for('index')}}">登入</a>
+        <a href="{{url_for('login')}}">登入</a>
       {% endif %}
     </nav>
     <div class="main">{% block content %}{% endblock %}</div>
