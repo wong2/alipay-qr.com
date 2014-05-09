@@ -2,8 +2,14 @@
 
 {% block more_header %}
 <style type="text/css">
+  body {
+    background: url('/static/images/banner.png') no-repeat;
+
+  }
   .login-container {
     margin-left: 50px;
+  }
+  .intro-container {
   }
   @media screen and (max-width: 768px) {
     .login-container {
@@ -12,6 +18,9 @@
     .intro-container img {
       width: 100%;
     }
+  }
+  nav a, footer a {
+    color: #2C3E50;
   }
 </style>
 {% endblock %}
@@ -24,7 +33,7 @@
   <img src="{{config.STATIC_PREFIX}}/images/screenshot.png" />
 </div>
 <div class="login-container pull-left">
-  <h4>开始创建：</h4>
+  <h4>立刻创建</h4>
   <a href="{{ url_for('login') }}">
     <img src="http://img.t.sinajs.cn/t4/appstyle/open/images/website/loginbtn/loginbtn_01.png" />
   </a>
