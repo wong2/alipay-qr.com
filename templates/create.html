@@ -52,29 +52,29 @@
 <form action="/create" method="POST" role="form" class="form-horizontal center-block" id="profile-form" enctype="multipart/form-data">
   <div class="form-group username-input">
     <label class="col-sm-4 control-label">自定义收款主页：</label>
-    <div class="col-sm-5">
+    <div class="col-sm-6">
       <div class="input-group">
         <span class="input-group-addon">http://alipay-qr.com/</span>
-        <input type="text" class="form-control" name="username" placeholder="">
+        <input type="text" class="form-control" name="username" placeholder="允许字母数字和下划线" value="{{username}}">
       </div>
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-4 control-label">上传支付宝二维码：</label>
-    <div class="col-sm-5">
-      <input type="file" name="qr_image" class="file-input btn-sm btn-info" title="浏览文件" />
+    <div class="col-sm-6">
+      <input type="file" name="qr_image" class="file-input btn-sm btn-inverse" title="浏览文件" />
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-4 control-label">真实姓名：</label>
-    <div class="col-sm-5">
-      <input type="text" class="form-control" name="realname" placeholder="选填" />
+    <div class="col-sm-6">
+      <input type="text" class="form-control" name="realname" placeholder="选填" value="{{realname}}" />
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-4 control-label">签名/备注：</label>
-    <div class="col-sm-5">
-      <textarea class="form-control" rows="3" name="intro" placeholder="选填，可以写一些自我介绍什么的"></textarea>
+    <div class="col-sm-6">
+      <textarea class="form-control" rows="3" name="intro" placeholder="选填，可以写一些自我介绍什么的">{{intro}}</textarea>
     </div>
   </div>
   <div class="form-group">

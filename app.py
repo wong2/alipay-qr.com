@@ -1,6 +1,7 @@
 #-*-coding:utf-8-*-
 
 import os
+import re
 import model
 from functools import wraps
 from hashlib import sha1
@@ -11,6 +12,7 @@ from flask_oauthlib.client import OAuth
 
 app = Flask(__name__)
 app.config.from_object('config')
+
 
 oauth = OAuth()
 weibo = oauth.remote_app('weibo', app_key='WEIBO')
@@ -38,58 +40,104 @@ def is_allowed_file(filename):
         filename.rsplit('.', 1)[1] in ['jpg', 'jpeg','png']
 
 
+def get_all_endpoints():
+    fn = get_all_endpoints
+    if not fn.endpoints:
+        fn.endpoints = [
+            rule.endpoint for rule in app.url_map.iter_rules()
+        ]
+    return fn.endpoints
+
+get_all_endpoints.endpoints = []
+
+
+def is_username_valid(username):
+    if len(username) > 20:
+        return False
+    if username in get_all_endpoints():
+        return False
+    if model.username_exists(username):
+        return False
+    if not re.match('^[a-zA-Z0-9_]+$', username):
+        return False
+    return True
+
+
 @app.route('/')
 def index():
     if 'oauth_token' in session:
         if not g.username:
-            uid = session['uid']
-            user = weibo.get('users/show.json', data={'uid': uid})
-            return render_template('create.html', **user.data)
+            return redirect(url_for('create_profile'))
         else:
             return redirect(url_for('profile', username=g.username))
     else:
         return render_template('login.html')
 
 
-@app.route('/create', methods=['POST'])
+def validate(username, realname, intro, file):
+    if not is_username_valid(username):
+        return u'用户名不合法'
+    if len(intro) > 300:
+        return u'自我介绍不能超过300个字符'
+    if not file:
+        return u'请选择文件'
+    if not is_allowed_file(file.filename):
+        return u'请选择图片文件'
+
+
+@app.route('/create', methods=['GET', 'POST'])
 @require_login
 def create_profile():
     uid = session['uid']
-    username = request.form.get('username')
-    realname = request.form.get('realname', '')
-    intro = request.form.get('intro', '')
+    username = realname = intro = ''
+    if request.method == 'POST':
+        username = request.form.get('username')
+        realname = request.form.get('realname', '')
+        intro = request.form.get('intro', '')
+        file = request.files.get('qr_image', None)
+        
+        error = validate(username, realname, intro, file)
+        if not error:
+            filename = '%s.jpg' % sha1(username).hexdigest()
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-    file = request.files['qr_image']
-    if file and is_allowed_file(file.filename):
-        filename = '%s.jpg' % sha1(username).hexdigest()
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            user = weibo.get('users/show.json', data={'uid': uid})
+            user_data = user.data
+
+            access_token, _ = session['oauth_token']
+            profile = {
+                'uid': uid,
+                'access_token': access_token,
+                'username': username,
+                'realname': realname,
+                'intro': intro,
+                'qr_image': filename,
+                'weibo_name': user_data['name'],
+                'weibo_id': user_data['profile_url'],
+                'weibo_location': user_data['location'],
+                'weibo_avatar': user_data['profile_image_url'],
+            }
+            model.create_profile(uid, username, profile)
+            flash(u'创建成功，把这个网页分享给好友就可以了~', category='success')
+            return redirect(url_for('profile', username=username))
+        else:
+            flash(error, category='danger')
 
     user = weibo.get('users/show.json', data={'uid': uid})
-    user_data = user.data
-
-    access_token, _ = session['oauth_token']
-    profile = {
-        'uid': uid,
-        'access_token': access_token,
+    payload = user.data
+    payload.update({
         'username': username,
         'realname': realname,
-        'intro': intro,
-        'qr_image': filename,
-        'weibo_name': user_data['name'],
-        'weibo_id': user_data['profile_url'],
-        'weibo_location': user_data['location'],
-        'weibo_avatar': user_data['profile_image_url'],
-    }
-    model.create_profile(uid, username, profile)
-    flash(u'创建成功，把这个网页分享给好友就可以了~')
-    return redirect(url_for('profile', username=username))
+        'intro': intro
+    })
+    return render_template('create.html', **user.data)
 
 
 @app.route('/check', methods=['GET', 'POST'])
 def check_username():
     username = request.values['username']
     return jsonify({
-        'valid': not model.username_exists(username)
+        'valid': is_username_valid(username)
     })
 
 
