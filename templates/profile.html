@@ -129,6 +129,7 @@
 {% endblock %}
 
 {% block more_footer %}
+<script type="text/javascript" src="{{config.STATIC_PREFIX}}/js/jquery.linkify.min.js"></script>
 <script type="text/javascript">
   $('.edit-intro').click(function() {
     $(this).hide();
@@ -146,7 +147,8 @@
     var fm = $(this);
     $.post(fm.attr('action'), fm.serialize())
      .done(function(data) {
-       $('#intro-text').text($('#edit-intro-form textarea').val());
+       var new_intro = $('#edit-intro-form textarea').val();
+       $('#intro-text').text(new_intro).linkify({target: '_blank'});
        reset();
      })
      .fail(function() {
@@ -154,5 +156,6 @@
      });
     event.preventDefault();
   });
+  $('#intro-text').linkify({target: '_blank'});
 </script>
 {% endblock %}
