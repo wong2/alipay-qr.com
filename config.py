@@ -2,7 +2,6 @@
 
 SECRET_KEY = 'THIS IS AN INSECURE SECRET'
 UPLOAD_FOLDER = 'qr_images'
-#STATIC_PREFIX = 'http://alipay-qr.qiniudn.com'
 STATIC_PREFIX = '/static'
 
 REDIS_URL = 'redis://localhost:6379/5'
@@ -18,3 +17,8 @@ WEIBO = dict(
     access_token_url='https://api.weibo.com/oauth2/access_token',
     content_type='application/json',
 )
+
+try:
+    from local_config import *
+except:
+    pass
