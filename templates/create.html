@@ -3,7 +3,7 @@
 {% block more_header %}
 <style type="text/css">
   #profile-form {
-    width: 800px;
+    max-width: 800px;
     margin-top: 50px;
   }
   #profile-form .has-success .input-group-addon {
@@ -17,7 +17,7 @@
   	right: 3px;
   }
   .intro {
-    width: 400px;
+    max-width: 400px;
     margin-top: 50px;
     text-align: center;
   }
@@ -37,6 +37,10 @@
   #profile-form .file-input .input-icon {
     right: -5px;
   }
+  .help-block {
+    font-size: 14px;
+    color: #BDC3C7;
+  }
 </style>
 {% endblock %}
 
@@ -55,14 +59,16 @@
     <div class="col-sm-6">
       <div class="input-group">
         <span class="input-group-addon">http://alipay-qr.com/</span>
-        <input type="text" class="form-control" name="username" placeholder="允许字母数字和下划线" value="{{username}}">
+        <input type="text" class="form-control" name="username" placeholder="个性域名" value="{{username}}">
       </div>
+      <small class="help-block text-muted">允许数字字母和下划线，不超过20个字符</small>
     </div>
   </div>
   <div class="form-group">
     <label class="col-sm-4 control-label">上传支付宝二维码：</label>
     <div class="col-sm-6">
       <input type="file" name="qr_image" class="file-input btn-sm btn-inverse" title="浏览文件" />
+      <small class="help-block text-muted">提示：可以在支付宝手机钱包里找到</small>
     </div>
   </div>
   <div class="form-group">
