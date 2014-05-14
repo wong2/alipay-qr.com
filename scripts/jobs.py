@@ -1,24 +1,7 @@
 #-*-coding:utf-8-*-
 
-from flask_oauthlib.client import OAuth
-
-from config import WEIBO
 from model import db
-
-
-oauth = OAuth()
-weibo = oauth.remote_app('weibo', **WEIBO)
-
-def change_weibo_header(uri, headers, body):
-    """Since weibo is a rubbish server, it does not follow the standard,
-    we need to change the authorization header for it."""
-    auth = headers.get('Authorization')
-    if auth:
-        auth = auth.replace('Bearer', 'OAuth2')
-        headers['Authorization'] = auth
-    return uri, headers, body
-
-weibo.pre_request = change_weibo_header
+from weibo_oauth import weibo
 
 
 def update_profile(username):

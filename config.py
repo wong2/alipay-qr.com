@@ -6,17 +6,8 @@ STATIC_PREFIX = '/static'
 
 REDIS_URL = 'redis://localhost:6379/5'
 
-WEIBO = dict(
-    consumer_key='1575471143',
-    consumer_secret='65bd9347098234c912b47922070971c6',
-    request_token_params={'scope': 'email'},
-    base_url='https://api.weibo.com/2/',
-    authorize_url='https://api.weibo.com/oauth2/authorize',
-    request_token_url=None,
-    access_token_method='POST',
-    access_token_url='https://api.weibo.com/oauth2/access_token',
-    content_type='application/json',
-)
+WEIBO_KEY  = '1575471143'
+WEIBO_SECRET = '65bd9347098234c912b47922070971c6'
 
 try:
     from local_config import *

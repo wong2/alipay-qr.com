@@ -6,16 +6,13 @@ import model
 from functools import wraps
 from hashlib import sha1
 from flask import (Flask, redirect, render_template, url_for,
-        request, session, abort, g, send_from_directory,
-        jsonify, flash)
-from flask_oauthlib.client import OAuth
+        request, session, abort, g, jsonify, flash)
+from weibo_oauth import weibo, oauth
 
 app = Flask(__name__)
 app.config.from_object('config')
 
 
-oauth = OAuth()
-weibo = oauth.remote_app('weibo', app_key='WEIBO')
 oauth.init_app(app)
 
 
