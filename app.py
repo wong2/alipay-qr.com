@@ -199,17 +199,5 @@ def get_weibo_oauth_token():
     return session.get('oauth_token')
 
 
-def change_weibo_header(uri, headers, body):
-    """Since weibo is a rubbish server, it does not follow the standard,
-    we need to change the authorization header for it."""
-    auth = headers.get('Authorization')
-    if auth:
-        auth = auth.replace('Bearer', 'OAuth2')
-        headers['Authorization'] = auth
-    return uri, headers, body
-
-weibo.pre_request = change_weibo_header
-
-
 if __name__=='__main__':
     app.run('0.0.0.0', debug=True)
