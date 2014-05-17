@@ -24,7 +24,8 @@ def get_username(uid):
         return
     return db.hget('users:lookup:username', uid)
 
-def username_exists(username):
+
+def is_username_exists(username):
     return db.exists('users:profile:%s' % username)
 
 

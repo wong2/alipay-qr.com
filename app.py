@@ -5,13 +5,12 @@ import re
 import model
 from functools import wraps
 from hashlib import sha1
-from flask import (Flask, redirect, render_template, url_for,
-        request, session, abort, g, jsonify, flash)
+from flask import Flask, redirect, render_template, url_for, request, session, abort, g, jsonify, flash
 from weibo_oauth import weibo, oauth
+
 
 app = Flask(__name__)
 app.config.from_object('config')
-
 
 oauth.init_app(app)
 
@@ -31,6 +30,7 @@ def require_login(f):
         else:
             return f(*args, **kwargs)
     return _
+
 
 def is_allowed_file(filename):
     return '.' in filename and \
@@ -53,7 +53,7 @@ def is_username_valid(username):
         return False
     if username in get_all_endpoints():
         return False
-    if model.username_exists(username):
+    if model.is_username_exists(username):
         return False
     if not re.match('^[a-zA-Z0-9_]+$', username):
         return False
